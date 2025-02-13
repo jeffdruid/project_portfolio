@@ -2,6 +2,8 @@
 
 A personal portfolio website aiming to showcase projects, skills, and achievements in a modern, user-friendly format. 
 
+![Overview Portfolio](README/media/portfolio.gif)
+
 ## Overview
 
 - **Purpose**: Create a clean, responsive platform to highlight completed projects and relevant expertise.
@@ -14,8 +16,7 @@ A personal portfolio website aiming to showcase projects, skills, and achievemen
   - Scalability for future expansions (e.g., blog, testimonials, or additional integrations).
 
 
-**Status**: Early planning and setup stage. Currently gathering requirements, drafting wireframes, and finalizing technology choices.
----
+**Status**: In Progress
 
 Stay tuned for updates as the project develops!
 ---
