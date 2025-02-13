@@ -135,8 +135,7 @@ function App() {
               viewport={{ once: true }}
               className="text-xl leading-relaxed mb-8 text-center"
             >
-              I craft digital experiences that merge form and function. With 2 years of expertise in full-stack development,
-              I transform complex problems into elegant solutions.
+              Diploma in Full Stack Software Development (Advanced Front End) – credit-rated at level 8 (60 SCQF credit points) by the University of the West of Scotland. Experienced in content moderation, policy implementation, and quality assurance, with advanced technical skills (HTML, CSS, JavaScript, Python, Django, React, PostgreSQL) and proven leadership in cross-functional environments. Bilingual in Brazilian Portuguese and English.
             </motion.p>
           </motion.div>
         </div>
@@ -191,23 +190,46 @@ function App() {
               {
                 title: "Social Blog Platform",
                 description: "A full-featured blog platform with social sharing features using Django and React",
-                image: "https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&w=800&h=500",
-                githubUrl: "https://github.com",
-                liveUrl: "https://example.com"
+                image: "https://github.com/jeffdruid/how-are-you-really/raw/master/README/images/reponsive.png",
+                githubUrl: "https://github.com/jeffdruid/how-are-you-really",
+                liveUrl: "https://how-are-you-really.web.app/"
               },
               {
                 title: "Event Planner App",
                 description: "A collaborative event management application with real-time updates",
-                image: "https://images.unsplash.com/photo-1540350394557-8d14678e7f91?auto=format&fit=crop&w=800&h=500",
-                githubUrl: "https://github.com",
-                liveUrl: "https://example.com"
+                // image: "https://github.com/jeffdruid/planpal/raw/main/README/images/feat-tooltip.gif",
+                image: "https://github.com/jeffdruid/planpal/raw/main/README/images/dashboard.png",
+                githubUrl: "https://github.com/jeffdruid/planpal",
+                liveUrl: "https://planpal-1fe5e3919654.herokuapp.com/"
               },
               {
                 title: "Weather App",
                 description: "A beautiful weather dashboard with data visualization",
-                image: "https://images.unsplash.com/photo-1592210454359-9043f067919b?auto=format&fit=crop&w=800&h=500",
-                githubUrl: "https://github.com",
-                liveUrl: "https://example.com"
+                image: "https://github.com/jeffdruid/weather-now/raw/main/assets/media/ui-intro.gif",
+                // image: "https://github.com/jeffdruid/weather-now/raw/main/assets/media/responsive-hero-update.png",
+                githubUrl: "https://github.com/jeffdruid/weather-now",
+                liveUrl: "https://jeffdruid.github.io/weather-now/"
+              },
+              {
+                title: "Drinks Menu App",
+                description: "Digital drinks menu with QR code scanning for contactless ordering",
+                image: "https://github.com/jeffdruid/fitzgeralds-menu/raw/main/assets/media/resp-menu-page.PNG",
+                githubUrl: "https://github.com/jeffdruid/fitzgeralds-menu",
+                liveUrl: "https://jeffdruid.github.io/fitzgeralds-menu/index.html"
+              },
+              {
+                title: "Link-Validator Tool",
+                description: "Python application that allows users to scrape a webpage and validate all the links found within it.",
+                image: "https://github.com/jeffdruid/link-validator/raw/main/assets/media/feat-menu.png",
+                githubUrl: "https://github.com/jeffdruid/link-validator",
+                liveUrl: "https://link-validator-b9009544d013.herokuapp.com/"
+              },
+              {
+                title: "DRF-API",
+                description: "API that handles content moderation, including flagging and checking content for specific trigger words.",
+                image: "https://github.com/jeffdruid/drf-api/raw/main/README/images/main.png",
+                githubUrl: "https://github.com/jeffdruid/drf-api",
+                liveUrl: "https://drf-api-jeff-00b8a22f06d7.herokuapp.com/api/"
               }
             ].map((project, index) => (
               <ProjectCard key={index} {...project} />
