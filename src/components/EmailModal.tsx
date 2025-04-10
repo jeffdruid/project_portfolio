@@ -16,6 +16,9 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
     message: ''
   });
 
+  // Form submission status
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+
   // Close modal on Escape key press
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -27,25 +30,51 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
     return () => window.removeEventListener('keydown', handleEsc);
   }, [onClose]);
 
-
-  // Form submission handler
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const mailtoLink = `mailto:jfdruida@gmail.com?subject=${encodeURIComponent(formData.subject)}&body=${encodeURIComponent(`From: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`)}`;
-    window.location.href = mailtoLink;
-    onClose();
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: '',
-    });
-  };
-
   // Form input change handler
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  // Form submission handler with Formspree
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Set status to 'sending'
+    setStatus('sending');
+
+    // Formspree endpoint
+    const endpoint = 'https://formspree.io/f/YOUR_FORM_ID'; // Replace with your Formspree form ID
+
+    // Send the form data to Formspree
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        body: JSON.stringify(formData),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        setStatus('success');
+        // Reset the form data
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: '',
+        });
+      } else {
+        throw new Error('Failed to send email');
+      }
+    } catch (error) {
+      setStatus('error');
+      console.error('Error sending email:', error);
+    }
+
+    // Close modal after submission
+    onClose();
   };
 
   return (
@@ -76,7 +105,13 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
             </motion.button>
             
             <h2 className="text-3xl font-bold mb-6 text-gray-900 tracking-tight">Let's Talk</h2>
-            
+
+            {/* Display status message */}
+            {status === 'sending' && <p className="text-gray-700">Sending your message...</p>}
+            {status === 'success' && <p className="text-green-600">Message sent successfully!</p>}
+            {status === 'error' && <p className="text-red-600">Something went wrong. Please try again.</p>}
+
+            {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
