@@ -2,20 +2,46 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 interface SocialButtonProps {
-  href: string;
+  href?: string;
   icon: React.ReactNode;
   label: string;
+  target?: string;
+  rel?: string;
+  onClick?: () => void;
 }
 
-export function SocialButton({ href, icon, label }: SocialButtonProps) {
+export function SocialButton({ href, icon, label, target, rel, onClick }: SocialButtonProps) {
+  const ButtonWrapper = ({ children }: { children: React.ReactNode }) => {
+    if (onClick) {
+      return (
+        <motion.button
+          onClick={onClick}
+          className="group relative"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          whileHover={{ y: -5 }}
+        >
+          {children}
+        </motion.button>
+      );
+    }
+    return (
+      <motion.a
+        href={href}
+        target={target}
+        rel={rel}
+        className="group relative"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        whileHover={{ y: -5 }}
+      >
+        {children}
+      </motion.a>
+    );
+  };
+
   return (
-    <motion.a
-      href={href}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -5 }}
-      className="group relative"
-    >
+    <ButtonWrapper>
       <motion.div
         className="relative z-10 p-4 bg-white/5 rounded-full border border-white/10 backdrop-blur-sm
                    transition-colors duration-300 group-hover:bg-white/10"
@@ -38,6 +64,6 @@ export function SocialButton({ href, icon, label }: SocialButtonProps) {
       >
         {label}
       </motion.div>
-    </motion.a>
+    </ButtonWrapper>
   );
 }
