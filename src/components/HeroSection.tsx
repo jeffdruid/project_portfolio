@@ -5,13 +5,11 @@ import { ScrollIndicator } from './ScrollIndicator';
 
 interface HeroSectionProps {
   scale: number | string;
-  // scale: any;
   opacity: number | string;
-  // opacity: any;
+  onOpenEmailModal: () => void;
 }
 
-export function HeroSection({ scale, opacity }: HeroSectionProps) {
-  // Animation for the main title
+export function HeroSection({ scale, opacity, onOpenEmailModal }: HeroSectionProps) {
   const letterAnimation = {
     initial: { y: 400 },
     animate: { y: 0 },
@@ -34,7 +32,7 @@ export function HeroSection({ scale, opacity }: HeroSectionProps) {
   const socialLinks = [
     { href: "https://github.com/jeffdruid", icon: <Github size={24} />, label: "GitHub", target: "_blank", rel: "noopener noreferrer" },
     { href: "https://www.linkedin.com/in/jefferson-aguiar-1b3b3452/", icon: <Linkedin size={24} />, label: "LinkedIn", target: "_blank", rel: "noopener noreferrer" },
-    { href: "mailto:jfdruida@gmail.com", icon: <Mail size={24} />, label: "Email", target: "_blank", rel: "noopener noreferrer" }
+    { onClick: onOpenEmailModal, icon: <Mail size={24} />, label: "Email" }
   ];
 
   return (
@@ -42,26 +40,9 @@ export function HeroSection({ scale, opacity }: HeroSectionProps) {
       {/* Animated background elements */}
       <motion.div
         style={{ scale, opacity }}
-        className="absolute inset-0 w-full h-full"
-      >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.1)_0%,_rgba(0,0,0,1)_100%)]" />
-        
-        {/* Floating particles effect */}
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.3, 0.5, 0.3],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "linear"
-          }}
-          className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTAiIGN5PSIxMCIgcj0iMSIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjEpIi8+PC9zdmc+')]"
-        />
-      </motion.div>
+        className="absolute inset-0 w-full h-full bg-black"
+      />
 
-      {/* Hero content */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -76,11 +57,6 @@ export function HeroSection({ scale, opacity }: HeroSectionProps) {
             variants={letterAnimation}
             className="text-7xl md:text-9xl font-bold tracking-tighter leading-[1.2] pb-6 relative"
           >
-            <motion.span
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -inset-x-20 -inset-y-10 bg-gradient-to-r from-transparent via-white/5 to-transparent blur-2xl"
-            />
             Jefferson Aguiar
           </motion.h1>
         </div>
@@ -91,15 +67,9 @@ export function HeroSection({ scale, opacity }: HeroSectionProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1, duration: 1 }}
         >
-          <motion.p 
-            animate={{ 
-              textShadow: ["0 0 8px rgba(255,255,255,0.4)", "0 0 16px rgba(255,255,255,0.2)", "0 0 8px rgba(255,255,255,0.4)"]
-            }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="text-xl md:text-2xl mb-16 tracking-widest"
-          >
+          <p className="text-xl md:text-2xl mb-16 tracking-widest">
             CREATIVE DEVELOPER
-          </motion.p>
+          </p>
         </motion.div>
 
         {/* Social links with enhanced hover effects */}
