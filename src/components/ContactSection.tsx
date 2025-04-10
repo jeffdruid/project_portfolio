@@ -61,7 +61,8 @@ export function ContactSection({ onOpenEmailModal }: ContactSectionProps) {
               <motion.a
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                href="/resume.pdf"
+                href="https://drive.google.com/file/d/1y6z_py5pfpifQr6idHs9MKmOUkBiZfCd/view?usp=sharing"
+                target="_blank"
                 className="group flex items-center gap-2 px-8 py-4 bg-black text-white rounded-full hover:bg-white hover:text-black border-2 border-white transition-colors"
               >
                 <ExternalLink size={20} />
