@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="snap-container bg-black text-white">
       <Navigation />
-      <HeroSection scale={scale} opacity={opacity} />
+      <HeroSection scale={scale} opacity={opacity} onOpenEmailModal={() => setIsEmailModalOpen(true)} />
       <AboutSection />
       <SkillsSection />
       <ProjectsSection />
