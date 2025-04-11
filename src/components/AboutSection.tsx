@@ -82,25 +82,25 @@ export function AboutSection() {
               >
                 About Me
               </motion.h2> */}
-              <div className="space-y-4 text-lg leading-relaxed text-gray-600">
+              <div className="space-y-4 text-lg leading-relaxed text-gray-600 text-center">
                 {words.map((word, index) => (
                   <motion.p
-                    key={index}
-                    variants={textAnimation}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.2 }}
-                    className="relative"
+                  key={index}
+                  variants={textAnimation}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.2 }}
+                  className="relative"
                   >
-                    <span className="relative z-10">{word}</span>
-                    <motion.span
-                      initial={{ scaleX: 0 }}
-                      whileInView={{ scaleX: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.2 + 0.3, duration: 0.5 }}
-                      className="absolute bottom-0 left-0 w-full h-[1px] bg-black/5 origin-left"
-                    />
+                  <span className="relative z-10">{word}</span>
+                  <motion.span
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.2 + 0.3, duration: 0.5 }}
+                    className="absolute bottom-0 left-0 w-full h-[1px] bg-black/5 origin-left"
+                  />
                   </motion.p>
                 ))}
               </div>
