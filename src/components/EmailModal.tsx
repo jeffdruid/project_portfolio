@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send } from 'lucide-react';
+import { X, Send, CheckCircle, AlertCircle } from 'lucide-react';
 
 interface EmailModalProps {
   isOpen: boolean;
@@ -65,16 +65,68 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
           subject: '',
           message: '',
         });
+        
+        // Auto close after success
+        setTimeout(() => {
+          onClose();
+          setStatus('idle');
+        }, 2000);
       } else {
         throw new Error('Failed to send email');
       }
     } catch (error) {
       setStatus('error');
       console.error('Error sending email:', error);
+      
+      // Reset error state after 3 seconds
+      setTimeout(() => {
+        setStatus('idle');
+      }, 3000);
     }
+  };
 
-    // Close modal after submission
-    onClose();
+  // Status message component
+  const StatusMessage = () => {
+    if (status === 'idle') return null;
+
+    const variants = {
+      initial: { opacity: 0, y: 10 },
+      animate: { opacity: 1, y: 0 },
+      exit: { opacity: 0, y: -10 }
+    };
+
+    const messages = {
+      sending: {
+        text: "Sending your message...",
+        class: "bg-blue-50 text-blue-700",
+        icon: <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: "linear" }}><Send size={20} /></motion.div>
+      },
+      success: {
+        text: "Message sent successfully!",
+        class: "bg-green-50 text-green-700",
+        icon: <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring" }}><CheckCircle size={20} /></motion.div>
+      },
+      error: {
+        text: "Failed to send message. Please try again.",
+        class: "bg-red-50 text-red-700",
+        icon: <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring" }}><AlertCircle size={20} /></motion.div>
+      }
+    };
+
+    const currentStatus = messages[status];
+
+    return (
+      <motion.div
+        variants={variants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        className={`${currentStatus.class} rounded-lg p-4 mb-6 flex items-center gap-3`}
+      >
+        {currentStatus.icon}
+        <span className="font-medium">{currentStatus.text}</span>
+      </motion.div>
+    );
   };
 
   return (
@@ -105,11 +157,8 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
             </motion.button>
             
             <h2 className="text-3xl font-bold mb-6 text-gray-900 tracking-tight">Let's Talk</h2>
-
-            {/* Display status message */}
-            {status === 'sending' && <p className="text-gray-700">Sending your message...</p>}
-            {status === 'success' && <p className="text-green-600">Message sent successfully!</p>}
-            {status === 'error' && <p className="text-red-600">Something went wrong. Please try again.</p>}
+            
+            <StatusMessage />
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -124,7 +173,8 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-200 text-gray-900"
+                  disabled={status === 'sending'}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-200 text-gray-900 disabled:opacity-50"
                   placeholder="Your name"
                 />
               </div>
@@ -140,7 +190,8 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-200 text-gray-900"
+                  disabled={status === 'sending'}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-200 text-gray-900 disabled:opacity-50"
                   placeholder="your@email.com"
                 />
               </div>
@@ -156,7 +207,8 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
                   value={formData.subject}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-200 text-gray-900"
+                  disabled={status === 'sending'}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-200 text-gray-900 disabled:opacity-50"
                   placeholder="What's this about?"
                 />
               </div>
@@ -171,8 +223,9 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
                   value={formData.message}
                   onChange={handleChange}
                   required
+                  disabled={status === 'sending'}
                   rows={4}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent resize-none transition-all duration-200 text-gray-900"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent resize-none transition-all duration-200 text-gray-900 disabled:opacity-50"
                   placeholder="Your message here..."
                 />
               </div>
@@ -181,10 +234,34 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
-                className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-black text-white font-semibold rounded-lg shadow-md hover:bg-gray-900 transition-colors duration-300"
+                disabled={status === 'sending'}
+                className={`w-full flex items-center justify-center gap-2 px-6 py-3 font-semibold rounded-lg shadow-md transition-all duration-300 ${
+                  status === 'success'
+                    ? 'bg-green-500 hover:bg-green-600'
+                    : 'bg-black hover:bg-gray-900'
+                } text-white disabled:opacity-50`}
               >
-                <Send size={18} />
-                <span>Send Message</span>
+                {status === 'sending' ? (
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                  >
+                    <Send size={18} />
+                  </motion.div>
+                ) : status === 'success' ? (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring" }}
+                  >
+                    <CheckCircle size={18} />
+                  </motion.div>
+                ) : (
+                  <Send size={18} />
+                )}
+                <span>
+                  {status === 'sending' ? 'Sending...' : status === 'success' ? 'Sent!' : 'Send Message'}
+                </span>
               </motion.button>
             </form>
           </motion.div>
