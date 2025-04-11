@@ -49,7 +49,8 @@ export function AboutSection() {
                 className="relative z-10"
               >
                 <img
-                  src="/README/media/profile.jfif"
+                  src="https://avatars.githubusercontent.com/u/17268967?v=4"
+                  // src="/README/media/profile.jfif"
                   alt="Profile"
                   className="w-48 h-48 md:w-64 md:h-64 rounded-2xl mx-auto object-cover grayscale hover:grayscale-0 transition-all duration-500 shadow-2xl"
                 />
