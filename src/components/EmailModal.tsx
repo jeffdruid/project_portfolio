@@ -44,7 +44,7 @@ export function EmailModal({ isOpen, onClose }: EmailModalProps) {
     setStatus('sending');
 
     // Formspree endpoint
-    const endpoint = 'https://formspree.io/f/YOUR_FORM_ID'; // Replace with your Formspree form ID
+    const endpoint = `https://formspree.io/f/${import.meta.env.VITE_FORMSPREE_ID}`;
 
     // Send the form data to Formspree
     try {
